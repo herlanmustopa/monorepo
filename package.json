@@ -3,11 +3,12 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "concurrently \"npm run dev --workspace=apps/frontend-repo\" \"npm run dev --workspace=apps/backend-repo\"",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "prettier": "^3.4.2",
     "turbo": "^2.4.0",
     "typescript": "5.7.3"
@@ -17,7 +18,11 @@
   },
   "packageManager": "npm@6.14.13",
   "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+    "apps/frontend-repo",
+    "apps/backend-repo",
+    "packages/shared"
+  ],
+  "dependencies": {
+    "@repo/shared": "^1.0.0"
+  }
 }
