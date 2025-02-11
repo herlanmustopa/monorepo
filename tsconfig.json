@@ -1,8 +1,10 @@
 {
     "compilerOptions": {
+        "typeRoots": ["./node_modules/@types"],
+        // "types": ["firebase"],
       "paths": {
         "@repo/shared": ["./packages/shared/src/index.ts"]
       }
     }
-  }
+}
   
