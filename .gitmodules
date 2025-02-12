@@ -1,0 +1,7 @@
+[submodule "apps/frontend-repo"]
+    path = apps/frontend-repo
+    url = https://github.com/herlanmustopa/frontend-repo.git
+
+[submodule "apps/backend-repo"]
+    path = apps/backend-repo
+    url = https://github.com/herlanmustopa/backend-repo.git
