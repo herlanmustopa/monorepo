@@ -26,6 +26,13 @@ coverage
 out/
 build
 dist
+*.tsbuildinfo
+
+# Compiled files in source directories
+packages/*/src/*.js
+packages/*/src/**/*.js
+!packages/*/src/**/*.config.js
+packages/*/turbo/generators/*.js
 
 
 # Debug
