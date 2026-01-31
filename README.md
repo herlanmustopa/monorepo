@@ -1,84 +1,197 @@
-# Turborepo starter
+# Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+A TypeScript monorepo powered by Turborepo for managing shared packages and configurations.
 
 ## What's inside?
 
-This Turborepo includes the following packages/apps:
+This monorepo includes the following packages:
 
-### Apps and Packages
+### Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `@repo/ui`: React component library with Button, Card, and Code components
+- `@repo/shared`: Shared TypeScript types and utilities
+- `@repo/eslint-config`: Shared ESLint configurations (base, Next.js, React)
+- `@repo/typescript-config`: Shared TypeScript configurations
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Each package is 100% [TypeScript](https://www.typescriptlang.org/).
 
-### Utilities
+## Project Structure
 
-This Turborepo has some additional tools already setup for you:
+```
+monorepo/
+├── packages/
+│   ├── ui/                  # React component library
+│   ├── shared/              # Shared types and utilities
+│   ├── eslint-config/       # ESLint configurations
+│   └── typescript-config/   # TypeScript configurations
+├── package.json             # Root workspace configuration
+├── turbo.json              # Turborepo configuration
+└── tsconfig.json           # Root TypeScript config
+```
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## Tech Stack
+
+- **Build System**: [Turborepo](https://turbo.build/repo) - High-performance build system for monorepos
+- **Language**: [TypeScript](https://www.typescriptlang.org/) 5.7.3 - Static type checking
+- **UI Framework**: [React](https://react.dev/) 19.0.0 - Component library
+- **Linting**: [ESLint](https://eslint.org/) 9.19.0 - Code quality
+- **Formatting**: [Prettier](https://prettier.io) 3.5.1 - Code formatting
+- **Package Manager**: npm 6.14.13
+- **Node Version**: >= 18
+
+## Getting Started
+
+### Installation
+
+```bash
+npm install
+```
 
 ### Build
 
-To build all apps and packages, run the following command:
+Build all packages:
+
+```bash
+npm run build
+```
+
+This will compile TypeScript to JavaScript in each package's `dist/` directory.
+
+### Development
+
+Run type checking across all packages:
+
+```bash
+npm run check-types
+```
+
+### Linting
+
+Run ESLint on all packages:
+
+```bash
+npm run lint
+```
+
+### Formatting
+
+Format all code with Prettier:
+
+```bash
+npm run format
+```
+
+## Package Commands
+
+### @repo/ui
+
+```bash
+# Build the component library
+npm run build --workspace=@repo/ui
+
+# Type check
+npm run check-types --workspace=@repo/ui
+
+# Lint
+npm run lint --workspace=@repo/ui
+
+# Clean build artifacts
+npm run clean --workspace=@repo/ui
+
+# Generate a new component
+npm run generate:component --workspace=@repo/ui
+```
+
+### @repo/shared
+
+```bash
+# Build shared types
+npm run build --workspace=@repo/shared
+
+# Type check
+npm run check-types --workspace=@repo/shared
+
+# Clean build artifacts
+npm run clean --workspace=@repo/shared
+```
+
+## Available Scripts
+
+- `npm run build` - Build all packages
+- `npm run check-types` - Type check all packages
+- `npm run lint` - Lint all packages
+- `npm run format` - Format all files with Prettier
+- `npm run dev` - Run development mode (Turbo)
+
+## Using Packages
+
+### Using @repo/ui Components
+
+```typescript
+import { Button } from "@repo/ui/button";
+import { Card } from "@repo/ui/card";
+import { Code } from "@repo/ui/code";
+
+function App() {
+  return (
+    <Card href="https://example.com">
+      <Button appName="My App">Click me</Button>
+      <Code>console.log("Hello World")</Code>
+    </Card>
+  );
+}
+```
+
+### Using @repo/shared Types
+
+```typescript
+import { User } from "@repo/shared";
+
+const user: User = {
+  id: "1",
+  name: "John Doe",
+  email: "john@example.com",
+  role: "admin",
+};
+```
+
+## Build Output
+
+All packages build to a `dist/` directory:
 
 ```
-cd my-turborepo
-pnpm build
+packages/
+├── ui/
+│   ├── src/           # TypeScript source files
+│   └── dist/          # Compiled JavaScript + type definitions
+├── shared/
+│   ├── src/           # TypeScript source files
+│   └── dist/          # Compiled JavaScript + type definitions
 ```
 
-### Develop
+The `dist/` directories are ignored by git and generated during build.
 
-To develop all apps and packages, run the following command:
+## Turborepo
 
-```
-cd my-turborepo
-pnpm dev
-```
+This monorepo uses Turborepo for efficient task execution with caching.
 
 ### Remote Caching
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+Turborepo can use [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines.
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+To enable Remote Caching:
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
+```bash
 npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
 npx turbo link
 ```
 
 ## Useful Links
 
-Learn more about the power of Turborepo:
+Learn more about Turborepo:
 
 - [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
 - [Caching](https://turbo.build/repo/docs/core-concepts/caching)
 - [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
