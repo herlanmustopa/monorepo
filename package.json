@@ -6,10 +6,12 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "check-types": "turbo check-types"
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "check-types": "turbo check-types",
+    "clean": "turbo clean && rm -rf node_modules/.cache",
+    "test": "turbo test"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2",
     "prettier": "^3.5.1",
     "turbo": "^2.4.2",
     "typescript": "5.7.3"
@@ -20,9 +22,5 @@
   "packageManager": "npm@6.14.13",
   "workspaces": [
     "packages/*"
-  ],
-  "dependencies": {
-    "@repo/shared": "^1.0.0",
-    "firebase": "^11.3.1"
-  }
+  ]
 }
